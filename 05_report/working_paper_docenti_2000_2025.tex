@@ -1,0 +1,241 @@
+\documentclass[11pt,a4paper]{article}
+
+% Pacchetti lingua, codifica e tipografia
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[italian]{babel}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% Margini e interlinea stile working paper
+\usepackage[top=2.1cm, bottom=2.1cm, left=2.2cm, right=2.2cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.15}
+
+% Matematica, tabelle e gestione intelligente dei grafici
+\usepackage{amsmath, amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[section]{placeins} % Impedisce ai grafici di scappare in altre sezioni
+\usepackage{caption}
+\captionsetup{font=small, labelfont=bf, skip=6pt}
+
+% Parametri LaTeX per eliminare spazi vuoti e tenere testo + grafici insieme
+\renewcommand{\topfraction}{0.90}
+\renewcommand{\bottomfraction}{0.85}
+\renewcommand{\textfraction}{0.07}
+\renewcommand{\floatpagefraction}{0.75}
+\setlength{\textfloatsep}{12pt plus 2pt minus 2pt}
+\setlength{\intextsep}{12pt plus 2pt minus 2pt}
+
+% Link sobri
+\usepackage[hidelinks]{hyperref}
+
+% Intestazione documento
+\title{\textbf{Retribuzioni dei docenti in Italia e in Europa (2000--2025):}\\
+\large Analisi longitudinale del potere d'acquisto, microsimulazione fiscale e trappola della progressività}
+\author{Andrea Cinti}
+\date{Novembre 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\noindent Il presente lavoro analizza l'evoluzione delle retribuzioni dei docenti della scuola secondaria di II grado in Italia nel periodo 2000--2025, scomponendo la variazione del potere d'acquisto reale tra dinamica contrattuale (lordo reale) ed effetto della politica fiscale (riforme IRPEF, taglio del cuneo e \textit{fiscal drag}). Attraverso una microsimulazione fiscale storica e l'integrazione dei dataset Eurostat (HICP) e OCSE (\textit{Education at a Glance} e \textit{Taxing Wages}), lo studio confronta inoltre il posizionamento italiano con sei partner europei (Francia, Germania, Belgio, Spagna, Polonia, Grecia) e la Media OCSE. I risultati mostrano un'erosione uniforme dei salari lordi reali italiani tra il $-6{,}5\%$ e l'$-8{,}0\%$ rispetto al 2000 (e tra il $-13{,}2\%$ e il $-14{,}0\%$ rispetto al picco reale del 2007). Il sistema fiscale ha tuttavia prodotto una netta biforcazione: ha compensato quasi integralmente la perdita contrattuale per i neoassunti ($+7{,}2\%$ di effetto fisco, netto reale a $+0{,}1\%$), mentre ha aggravato l'erosione per le fasce senior ($-8{,}0\%$ / $-8{,}5\%$ netto reale). Nel confronto europeo, il ritardo salariale italiano risulta primariamente riconducibile alla stagnazione dei salari lordi, amplificata dalla più ripida progressività fiscale d'Europa ($+20{,}7$ punti percentuali tra il 67\% e il 167\% del salario medio nazionale).
+\end{abstract}
+
+\section{Introduzione e domanda di ricerca}
+Il dibattito pubblico sulle retribuzioni del personale scolastico italiano oscilla frequentemente tra due spiegazioni contrapposte: da un lato la stagnazione dei rinnovi contrattuali a fronte dell'inflazione cumulata, dall'altro il peso del prelievo fiscale e contributivo sul lavoro dipendente.
+
+Questo studio risponde a due domande empiriche specifiche:
+\begin{enumerate}
+    \item Qual è stata l'effettiva variazione del potere d'acquisto dei docenti italiani tra il 2000 e il 2025, e in che misura tale variazione è imputabile alla dinamica contrattuale rispetto al fisco lungo le diverse fasce di anzianità?
+    \item Nel confronto con i principali paesi europei, il divario retributivo italiano dipende da una pressione fiscale mediamente più elevata o da una combinazione di salari lordi fermi e progressività fiscale più ripida?
+\end{enumerate}
+
+\section{Fonti dati e metodologia}
+
+\subsection{Fonti dati}
+L'analisi integra tre fonti istituzionali:
+\begin{itemize}
+    \item \textbf{CCNL Comparto Scuola (ARAN, 2000--2025):} serie storica delle retribuzioni tabellari annue (su 13 mensilità) e della Retribuzione Professionale Docenti (RPD) per la scuola secondaria di II grado, armonizzate per fascia di anzianità (accorpando le fasce d'ingresso 0--2 e 0--8).
+    \item \textbf{Eurostat HICP (\texttt{prc\_hicp\_aind}, voce \texttt{CP00}):} indice armonizzato dei prezzi al consumo medio annuo, utilizzato per deflazionare le serie nominali a prezzi costanti 2025.
+    \item \textbf{OCSE (\textit{Education at a Glance} e \textit{Taxing Wages}, 2000--2025):} salari statutari in parità di potere d'acquisto (USD PPP), indici reali 2015--2025 e aliquote effettive nette (\textit{Net personal average tax rate}) per lavoratore single senza figli al 67\%, 100\% e 167\% del salario medio nazionale (\textit{Average Wage}, AW).
+\end{itemize}
+
+\subsection{Deflazione e microsimulazione fiscale italiana}
+Per ciascuna fascia di anzianità $i$ e anno $t \in [2000, 2025]$, la retribuzione lorda reale a prezzi costanti 2025 è definita come:
+\begin{equation}
+    L_{i,t}^{\text{reale, 2025}} = L_{i,t}^{\text{nom}} \cdot \frac{\text{HICP}_{2025}}{\text{HICP}_{t}}
+\end{equation}
+dove $L_{i,t}^{\text{nom}} = \text{Tabellare}_{12m} \cdot \frac{13}{12} + \text{RPD}_{\text{annua}}$.
+
+Il salario netto annuo $N_{i,t}^{\text{nom}}$ è ottenuto tramite una microsimulazione fiscale storica (profilo standard: lavoratore single senza carichi familiari, regime TFR) che applica per ogni anno $t$:
+\begin{equation}
+    N_{i,t}^{\text{nom}} = L_{i,t}^{\text{nom}} - C_{i,t} - \max\bigl(0,\ \text{IRPEF}_{\text{lorda}}(Y_{i,t}, t) - D(Y_{i,t}, t)\bigr) + B(Y_{i,t}, t) - A_{i,t}
+\end{equation}
+dove $C_{i,t}$ rappresenta i contributi previdenziali a carico del dipendente, $Y_{i,t} = L_{i,t}^{\text{nom}} - C_{i,t}$ l'imponibile IRPEF, $D(\cdot)$ le detrazioni per lavoro dipendente, $B(\cdot)$ i bonus/esoneri contributivi vigenti nell'anno $t$ (incluso il taglio del cuneo fiscale) e $A_{i,t}$ le addizionali regionali e comunali medie.
+
+\subsection{Scomposizione dell'erosione reale (Contratto vs Fisco)}
+La variazione percentuale cumulata del salario netto reale tra il 2000 e il 2025 ($\Delta\% N_i$) viene scomposta in due componenti additive:
+\begin{equation}
+    \underbrace{\Delta\% N_i}_{\text{Variazione Netto Reale}} = \underbrace{\Delta\% L_i}_{\text{Effetto Contratto / Inflazione}} + \underbrace{(\Delta\% N_i - \Delta\% L_i)}_{\text{Effetto Fisco}}
+\end{equation}
+L'\textit{Effetto Contratto} misura la variazione che si sarebbe osservata al netto a parità di aliquota effettiva del 2000; l'\textit{Effetto Fisco} isola il contributo netto delle riforme fiscali (segno positivo) rispetto al \textit{fiscal drag} (segno negativo).
+
+\section{Italia: salari lordi reali (2000--2025)}
+
+Tra il 2000 e il 2025, la dinamica dei salari lordi reali mostra un andamento uniforme lungo l'intera scala di anzianità (Figura~\ref{fig:it_fasce_reali}): tutte le fasce raggiungono un picco reale nel \textbf{2007}, per poi subire una contrazione cumulata compresa tra il $-13{,}2\%$ e il $-14{,}0\%$ rispetto al picco (e tra il $-6{,}5\%$ e l'$-8{,}0\%$ rispetto al 2000), aggravata dal lungo blocco contrattuale degli anni Dieci e dallo shock inflazionistico del 2022--2023.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{01_italia_fasce_reali_2000_2025.png}
+    \caption{Andamento del salario lordo reale dei docenti italiani per fascia di anzianità (2000--2025, prezzi costanti 2025).}
+    \label{fig:it_fasce_reali}
+\end{figure}
+
+L'analisi longitudinale della coorte assunta nel 2000 (Figura~\ref{fig:it_coorte}) mostra tuttavia come la progressione automatica per scatti di anzianità abbia permesso al singolo docente rimasto in servizio per 25 anni di incrementare il proprio potere d'acquisto individuale ($+27{,}9\%$), pur a fronte di una svalutazione strutturale delle singole fasce retributive.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{02_italia_coorte_2000.png}
+    \caption{Traiettoria retributiva reale della coorte di docenti assunta nel 2000 lungo i primi 25 anni di carriera.}
+    \label{fig:it_coorte}
+\end{figure}
+
+\section{Italia: microsimulazione fiscale e salari netti}
+
+Passando dal lordo al netto tramite la microsimulazione fiscale storica (Figure~\ref{fig:it_netto_annuo} e~\ref{fig:it_netto_mensile}), emerge una netta divaricazione tra le fasce iniziali e quelle avanzate della carriera.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{05_italia_netto_reale_2000_2025.png}
+    \caption{Evoluzione del salario netto reale annuo per fascia di anzianità in Italia (2000--2025, prezzi costanti 2025).}
+    \label{fig:it_netto_annuo}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{05b_italia_netto_mensile_reale_2000_2025.png}
+    \caption{Evoluzione del salario netto reale mensile (su 13 mensilità) per fascia di anzianità in Italia (2000--2025).}
+    \label{fig:it_netto_mensile}
+\end{figure}
+
+La Figura~\ref{fig:it_pressione} illustra l'evoluzione dell'aliquota fiscale e contributiva effettiva dal 2000 al 2025: mentre sulle fasce d'ingresso gli interventi sul cuneo fiscale e le rimodulazioni delle detrazioni hanno ridotto il prelievo effettivo, sulle fasce senior il mancato adeguamento all'inflazione degli scaglioni IRPEF (\textit{fiscal drag}) ha spinto verso l'alto l'aliquota media.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{06_italia_pressione_fiscale_2000_2025.png}
+    \caption{Evoluzione della pressione fiscale effettiva (contributi + IRPEF + addizionali) in Italia per fascia di anzianità (2000--2025).}
+    \label{fig:it_pressione}
+\end{figure}
+
+La Tabella~\ref{tab:scomposizione} e la Figura~\ref{fig:scomposizione} sintetizzano l'effetto netto di questo sdoppiamento: sui neoassunti (0--8) l'effetto fisco ($+7{,}16\%$) ha annullato la perdita contrattuale ($+0{,}14\%$ netto), mentre sulle fasce senior (28--34 e 35+) ha aggiunto un ulteriore $-1{,}57\%$ / $-1{,}72\%$ di erosione, portando la perdita netta reale all'$-8{,}0\%$ / $-8{,}5\%$.
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{Scomposizione della variazione del salario reale dei docenti in Italia (2000--2025, prezzi costanti 2025).}
+\label{tab:scomposizione}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Fascia di anzianità} & \textbf{Effetto Contratto (\%)} & \textbf{Effetto Fisco (\%)} & \textbf{Netto Reale Totale (\%)} \\
+\midrule
+Ingresso (0--2 / 0--8) & $-7{,}03$ & $+7{,}16$ & $+0{,}14$ \\
+9--14                  & $-8{,}01$ & $+5{,}72$ & $-2{,}29$ \\
+15--20                 & $-7{,}18$ & $+3{,}98$ & $-3{,}19$ \\
+21--27                 & $-7{,}87$ & $+0{,}87$ & $-7{,}00$ \\
+28--34                 & $-6{,}45$ & $-1{,}57$ & $-8{,}01$ \\
+35+                    & $-6{,}77$ & $-1{,}72$ & $-8{,}50$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{10_italia_scomposizione_contratto_vs_fisco.png}
+    \caption{Scomposizione della variazione del salario netto reale (2000--2025) per fascia di anzianità: Effetto Contratto/Inflazione vs Effetto Fisco.}
+    \label{fig:scomposizione}
+\end{figure}
+
+\section{Confronto europeo e trappola della progressività}
+
+Il confronto internazionale su dati OCSE \textit{Education at a Glance} (Figure~\ref{fig:eu_ppp} e~\ref{fig:eu_trend}) conferma il posizionamento arretrato dell'Italia in termini di salari statutari in parità di potere d'acquisto (USD PPP) ed evidenzia una dinamica reale 2015--2025 persistentemente debole rispetto ai principali partner europei.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{03_ocse_ppp_2025_confronto.png}
+    \caption{Confronto europeo dei salari statutari lordi dei docenti in parità di potere d'acquisto (USD PPP, 2025).}
+    \label{fig:eu_ppp}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{04_ocse_trend_2015_2025.png}
+    \caption{Evoluzione reale dei salari statutari dei docenti in Europa (2015--2025, numero indice).}
+    \label{fig:eu_trend}
+\end{figure}
+
+Integrando i salari statutari con le aliquote effettive OCSE \textit{Taxing Wages} al 100\% AW (Figura~\ref{fig:eu_lordo_netto}), il passaggio dal lordo al netto riduce parzialmente il divario italiano rispetto a paesi ad alta tassazione media come Germania e Belgio, senza tuttavia colmare il ritardo strutturale.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{07_europa_lordo_vs_netto_2025.png}
+    \caption{Confronto europeo dei salari lordi e netti a 15 anni di esperienza nel 2025 (numero indice, Italia = 100).}
+    \label{fig:eu_lordo_netto}
+\end{figure}
+
+Come mostrato nella Figura~\ref{fig:pressione_eu}, nel 2025 la pressione fiscale italiana al 100\% AW si attesta al \textbf{28,6\%}, sostanzialmente invariata rispetto al 2000 (29,0\%, $-0{,}4$ p.p.), allineata alla Francia (28,0\%) e di oltre 10 punti percentuali inferiore a Germania (38,7\%) e Belgio (39,5\%).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{08_europa_pressione_fiscale_2000_2025.png}
+    \caption{Evoluzione della pressione fiscale effettiva netta in Europa (2000--2025), lavoratore single senza figli al 100\% AW.}
+    \label{fig:pressione_eu}
+\end{figure}
+
+Il vero elemento di anomalia del sistema italiano emerge analizzando la \textbf{progressività fiscale} lungo la distribuzione dei redditi (Tabella~\ref{tab:progressivita} e Figura~\ref{fig:progressivita}). Passando dal 67\% al 167\% del salario medio, l'aliquota effettiva italiana cresce di \textbf{+20,7 punti percentuali} (dal 19,1\% al 39,9\%), oltre il doppio rispetto alla Media OCSE ($+9{,}6$ p.p.) e alla Francia ($+10{,}1$ p.p.), e più del doppio rispetto alla Germania ($+8{,}2$ p.p.).
+
+\begin{table}[htbp]
+\centering
+\small
+\setlength{\tabcolsep}{5pt}
+\caption{Aliquote effettive nette in Europa per livello di reddito (2025) e variazione 2000--2025 (100\% AW).}
+\label{tab:progressivita}
+\begin{tabular}{lrrrrr}
+\toprule
+\textbf{Paese} & \textbf{67\% AW} & \textbf{100\% AW} & \textbf{167\% AW} & \textbf{Salto 67$\rightarrow$167} & \textbf{$\Delta$ 2000--25 (100\%)} \\
+\midrule
+\textbf{Italia}     & \textbf{19,1\%} & \textbf{28,6\%} & \textbf{39,9\%} & \textbf{+20,7 p.p.} & \textbf{$-0{,}4$ p.p.} \\
+Belgio              & 31,5\%          & 39,5\%          & 47,4\%          & +15,9 p.p.          & $-3{,}5$ p.p. \\
+Grecia              & 21,1\%          & 26,1\%          & 33,0\%          & +11,8 p.p.          & $+4{,}5$ p.p. \\
+Spagna              & 18,9\%          & 23,5\%          & 29,7\%          & +10,9 p.p.          & $+3{,}7$ p.p. \\
+Francia             & 23,7\%          & 28,0\%          & 33,8\%          & +10,1 p.p.          & $-1{,}2$ p.p. \\
+Media OCSE          & 20,7\%          & 25,1\%          & 30,3\%          & +9,6 p.p.           & $-0{,}1$ p.p. \\
+Germania            & 34,1\%          & 38,7\%          & 42,3\%          & +8,2 p.p.           & $-4{,}5$ p.p. \\
+Polonia             & 22,6\%          & 24,4\%          & 29,3\%          & +6,7 p.p.           & $-3{,}4$ p.p. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth]{09_europa_progressivita_fiscale_2025.png}
+    \caption{La trappola della progressività fiscale in Europa nel 2025: aliquota effettiva netta al 67\%, 100\% e 167\% del salario medio nazionale.}
+    \label{fig:progressivita}
+\end{figure}
+
+\section{Limiti metodologici e cautele}
+L'interpretazione dei risultati richiede di considerare quattro limiti strutturali del disegno di ricerca:
+\begin{enumerate}
+    \item \textbf{Profilo familiare standard:} sia la microsimulazione italiana sia i benchmark OCSE \textit{Taxing Wages} assumono un lavoratore single senza figli. Carichi familiari, assegni unici e detrazioni personali modificano l'aliquota effettiva individuale.
+    \item \textbf{Salari statutari vs effettivi:} l'analisi italiana si basa sulle retribuzioni tabellari CCNL (escludendo compensi accessori da fondo d'istituto o incarichi aggiuntivi), garantendo omogeneità temporale ma non catturando le componenti variabili locali.
+    \item \textbf{Regimi previdenziali speciali in Europa:} nel confronto internazionale, l'aliquota OCSE al 100\% AW riflette il lavoratore dipendente standard e non cattura regimi specifici del pubblico impiego, come lo status di funzionario (\textit{Beamte}) di parte dei docenti tedeschi, caratterizzato da un prelievo contributivo agevolato.
+    \item \textbf{Addizionali locali medie:} nella microsimulazione italiana sono applicate addizionali regionali e comunali medie nazionali, trascurando la variabilità territoriale tra regioni e comuni.
+\end{enumerate}
+
+\section{Conclusioni}
+L'evidenza empirica raccolta consente di chiarire le cause dell'erosione retributiva dei docenti italiani tra il 2000 e il 2025. Il determinante primario del ritardo rispetto al 2007 e rispetto ai partner europei è la stagnazione dei salari lordi contrattuali, che ha colpito in misura uniforme tutte le fasce di anzianità. La politica fiscale dell'ultimo venticinquennio non ha aumentato il carico medio rispetto al 2000, ma ha generato una marcata polarizzazione interna: ha protetto i redditi d'ingresso tramite il taglio del cuneo, mentre ha penalizzato le carriere senior attraverso il \textit{fiscal drag} e una progressività effettiva che risulta la più ripida d'Europa.
+
+\end{document}

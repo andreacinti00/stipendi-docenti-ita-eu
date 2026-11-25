@@ -1,0 +1,22 @@
+# File di sessione e cronologia R
+.Rhistory
+.Rapp.history
+.RData
+.RDataTmp
+.Ruserdata
+
+# Cartelle temporanee di RStudio
+.Rproj.user/
+
+# File di sistema (Windows / macOS)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# File temporanei di Office / LaTeX / Quarto (se li userai in 05_report/)
+~$*.docx
+~$*.xlsx
+*.aux
+*.log
+*.out
+*.toc
