@@ -1,7 +1,7 @@
 # File di sessione e cronologia R
 .Rhistory
 .Rapp.history
-.RData
+*.RData
 .RDataTmp
 .Ruserdata
 
